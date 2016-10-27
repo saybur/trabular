@@ -31,7 +31,7 @@ all: $(MAIN).hex
 clean:
 	rm -f $(MAIN).elf $(MAIN).hex $(MAIN).lst $(OBJS)
 
-.PHONY: burn
+.PHONY: flash
 flash: $(MAIN).hex
 	avrdude $(AVRDUDE_FLAGS) -U $<
 
