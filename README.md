@@ -26,5 +26,5 @@ $2.00 in single unit quantities.  Board space requirements are also
 minimal in most cases.
 
 The firmware is licensed under
-[GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).  See the COPYING
+[GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).  See the LICENSE
 file.
