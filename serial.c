@@ -70,10 +70,9 @@ void handle_data()
 	// --- use USART ---
 	#else
 		if (!(UCSR0A & _BV(RXC0))) return;
-		uint8_t response;
 		uint8_t serial = UDR0;
 		#ifndef DEBUG_MODE
-			response = handle_serial_data(serial);
+			uint8_t response = handle_serial_data(serial);
 			if (response > 0)
 			{
 				UDR0 = response;
