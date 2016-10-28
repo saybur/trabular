@@ -28,7 +28,7 @@
 	#define ADB_SIGDEL_SYNC_MIN 22
 	#define ADB_SIGDEL_SYNC_MAX 77
 	#define ADB_SIGDEL_SRQ_ASSERT 38
-	#define ADB_SIGDEL_TLT 41
+	#define ADB_SIGDEL_SRQ_MAX 41
 	#define ADB_SIGDEL_TALK 24
 	#define ADB_SIGDEL_LISTEN1 30
 	#define ADB_SIGDEL_LISTEN2 5
@@ -44,7 +44,7 @@
 	#define ADB_SIGDEL_SYNC_MIN 44
 	#define ADB_SIGDEL_SYNC_MAX 154
 	#define ADB_SIGDEL_SRQ_ASSERT 75
-	#define ADB_SIGDEL_TLT 83
+	#define ADB_SIGDEL_SRQ_MAX 83
 	#define ADB_SIGDEL_TALK 47
 	#define ADB_SIGDEL_LISTEN1 60
 	#define ADB_SIGDEL_LISTEN2 10
@@ -271,9 +271,15 @@ static uint8_t adb_srq(uint8_t command)
 	
 	// make sure the line has gone high before we return, so we're
 	// in the same state regardless of SRQ issue from us
-	while (ADB_IS_ASSERTED && TCNT0 < ADB_SIGDEL_TLT)
+	while (ADB_IS_ASSERTED && TCNT0 < ADB_SIGDEL_SRQ_MAX)
 	{
 		handle_data();
+	}
+	uint8_t delay = stop_timer();
+	if (delay >= ADB_SIGDEL_SRQ_MAX)
+	{
+		adb_protocol_error = 2;
+		return 0;
 	}
 	
 	stop_timer();
