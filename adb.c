@@ -221,6 +221,8 @@ static uint8_t adb_srq(uint8_t command)
 	handle_data();
 	
 	// are we being addressed?
+	// also, guard here against internal address collisions: once we
+	// have a target, others should be prevented from speaking
 	uint8_t address = command >> 4;
 	uint8_t target = 0;
 	#ifdef USE_KEYBOARD
@@ -230,13 +232,13 @@ static uint8_t adb_srq(uint8_t command)
 		}
 	#endif
 	#ifdef USE_MOUSE
-		if (address == mse_addr)
+		if (target == 0 && address == mse_addr)
 		{
 			target |= ADB_MSE_FLAG_MASK;
 		}
 	#endif
 	#ifdef USE_ARBITRARY
-		if (address == arb_addr)
+		if (target == 0 && address == arb_addr)
 		{
 			target |= ADB_ARB_FLAG_MASK;
 		}
