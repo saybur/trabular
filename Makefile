@@ -1,6 +1,8 @@
 ##### PER PROJECT CONFIGURATION OPTIONS #####
 
-PROGRAMMER := usbtiny
+PROGRAMMER := arduino -P /dev/ttyUSB0 -b 57600 -D
+#PROGRAMMER := usbtiny
+
 MCU := atmega328p
 
 ADB_PORT := ADB_PORTB
